@@ -1,22 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: metadata-test
+  name: test-ping
+  namespace: default
+  annotations:
+    tcpdump.antrea.io: "5"
 spec:
   containers:
-  - name: controller
-    image: pod-metadata-test
-    imagePullPolicy: Never
-    env:
-    - name: NODE_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: spec.nodeName
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
-    - name: POD_NAMESPACE
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.namespace
+  - name: busybox
+    image: busybox
+    command: ["sh", "-c", "while true; do ping 8.8.8.8; sleep 1; done"]
