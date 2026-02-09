@@ -1,0 +1,56 @@
+Name:             test-ping
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             pcap-cluster-control-plane/172.20.0.2
+Start Time:       Tue, 10 Feb 2026 01:38:30 +0530
+Labels:           <none>
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.6
+IPs:
+  IP:  10.244.0.6
+Containers:
+  busybox:
+    Container ID:  containerd://333abe064d6a871f7891bc691458dae692d8b4e2ef77b736c9340ed229558fa0
+    Image:         busybox
+    Image ID:      docker.io/library/busybox@sha256:b3255e7dfbcd10cb367af0d409747d511aeb66dfac98cf30e97e87e4207dd76f
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      while true; do ping 8.8.8.8; sleep 1; done
+    State:          Running
+      Started:      Tue, 10 Feb 2026 01:38:38 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cgtnd (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-cgtnd:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  23m   default-scheduler  Successfully assigned default/test-ping to pcap-cluster-control-plane
+  Normal  Pulling    23m   kubelet            Pulling image "busybox"
+  Normal  Pulled     23m   kubelet            Successfully pulled image "busybox" in 7.499s (7.499s including waiting). Image size: 2222260 bytes.
+  Normal  Created    23m   kubelet            Container created
+  Normal  Started    23m   kubelet            Container started
