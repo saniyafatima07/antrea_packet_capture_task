@@ -3,16 +3,16 @@ Namespace:        default
 Priority:         0
 Service Account:  default
 Node:             pcap-cluster-control-plane/172.20.0.2
-Start Time:       Tue, 10 Feb 2026 04:35:39 +0530
+Start Time:       Tue, 10 Feb 2026 18:55:41 +0530
 Labels:           <none>
-Annotations:      tcpdump.antrea.io: 5
+Annotations:      <none>
 Status:           Running
-IP:               10.244.0.7
+IP:               10.244.0.11
 IPs:
-  IP:  10.244.0.7
+  IP:  10.244.0.11
 Containers:
   ping:
-    Container ID:  containerd://e1e01a9734f7c9aacc7e7313505fc6aada089fa5e1b1c9487ee0a26e4af8c535
+    Container ID:  containerd://ee2303c2535eb76615701415b1c208beecf5853a44113ff621eeda39a3dae2c9
     Image:         busybox
     Image ID:      docker.io/library/busybox@sha256:b3255e7dfbcd10cb367af0d409747d511aeb66dfac98cf30e97e87e4207dd76f
     Port:          <none>
@@ -20,14 +20,14 @@ Containers:
     Command:
       sh
       -c
-      while true; do ping 8.8.8.8; done
+      while true; do ping -c 1 8.8.8.8; sleep 1; done
     State:          Running
-      Started:      Tue, 10 Feb 2026 04:35:42 +0530
+      Started:      Tue, 10 Feb 2026 18:55:44 +0530
     Ready:          True
     Restart Count:  0
     Environment:    <none>
     Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-5gbfx (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-mz2sc (ro)
 Conditions:
   Type                        Status
   PodReadyToStartContainers   True 
@@ -36,7 +36,7 @@ Conditions:
   ContainersReady             True 
   PodScheduled                True 
 Volumes:
-  kube-api-access-5gbfx:
+  kube-api-access-mz2sc:
     Type:                    Projected (a volume that contains injected data from multiple sources)
     TokenExpirationSeconds:  3607
     ConfigMapName:           kube-root-ca.crt
@@ -49,8 +49,8 @@ Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists fo
 Events:
   Type    Reason     Age   From               Message
   ----    ------     ----  ----               -------
-  Normal  Scheduled  57m   default-scheduler  Successfully assigned default/test-ping to pcap-cluster-control-plane
-  Normal  Pulling    57m   kubelet            Pulling image "busybox"
-  Normal  Pulled     57m   kubelet            Successfully pulled image "busybox" in 2.371s (2.371s including waiting). Image size: 2222260 bytes.
-  Normal  Created    57m   kubelet            Container created
-  Normal  Started    57m   kubelet            Container started
+  Normal  Scheduled  45s   default-scheduler  Successfully assigned default/test-ping to pcap-cluster-control-plane
+  Normal  Pulling    45s   kubelet            Pulling image "busybox"
+  Normal  Pulled     42s   kubelet            Successfully pulled image "busybox" in 2.732s (2.732s including waiting). Image size: 2222260 bytes.
+  Normal  Created    42s   kubelet            Container created
+  Normal  Started    42s   kubelet            Container started

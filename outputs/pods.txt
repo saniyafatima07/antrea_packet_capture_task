@@ -1,13 +1,13 @@
-NAMESPACE            NAME                                                 READY   STATUS    RESTARTS      AGE
-default              test-ping                                            1/1     Running   0             57m
-kube-system          antrea-agent-vdxzn                                   2/2     Running   8 (20h ago)   3d12h
-kube-system          antrea-controller-7f69c8dc84-gwntf                   1/1     Running   6 (20h ago)   2d15h
-kube-system          coredns-7d764666f9-qtbps                             1/1     Running   4 (20h ago)   3d15h
-kube-system          coredns-7d764666f9-rfqbs                             1/1     Running   4 (20h ago)   3d15h
-kube-system          etcd-pcap-cluster-control-plane                      1/1     Running   5 (20h ago)   3d15h
-kube-system          kube-apiserver-pcap-cluster-control-plane            1/1     Running   5 (20h ago)   3d15h
-kube-system          kube-controller-manager-pcap-cluster-control-plane   1/1     Running   5 (20h ago)   3d15h
-kube-system          kube-proxy-kjr9l                                     1/1     Running   5 (20h ago)   3d15h
-kube-system          kube-scheduler-pcap-cluster-control-plane            1/1     Running   5 (20h ago)   3d15h
-kube-system          packet-capture-pv9n2                                 1/1     Running   0             4m38s
-local-path-storage   local-path-provisioner-67b8995b4b-l8n56              1/1     Running   4 (20h ago)   3d15h
+NAMESPACE            NAME                                                 READY   STATUS    RESTARTS         AGE
+default              test-ping                                            1/1     Running   0                60s
+kube-system          antrea-agent-vdxzn                                   2/2     Running   10 (4h23m ago)   4d1h
+kube-system          antrea-controller-7f69c8dc84-gwntf                   1/1     Running   8 (4h22m ago)    3d5h
+kube-system          coredns-7d764666f9-qtbps                             1/1     Running   5 (4h23m ago)    4d4h
+kube-system          coredns-7d764666f9-rfqbs                             1/1     Running   5 (4h23m ago)    4d4h
+kube-system          etcd-pcap-cluster-control-plane                      1/1     Running   6 (4h23m ago)    4d4h
+kube-system          kube-apiserver-pcap-cluster-control-plane            1/1     Running   6 (4h23m ago)    4d4h
+kube-system          kube-controller-manager-pcap-cluster-control-plane   1/1     Running   6 (4h23m ago)    4d4h
+kube-system          kube-proxy-kjr9l                                     1/1     Running   6 (4h23m ago)    4d4h
+kube-system          kube-scheduler-pcap-cluster-control-plane            1/1     Running   6 (4h23m ago)    4d4h
+kube-system          packet-capture-sdx4d                                 1/1     Running   0                5m58s
+local-path-storage   local-path-provisioner-67b8995b4b-l8n56              1/1     Running   5 (4h23m ago)    4d4h
