@@ -8,15 +8,18 @@ import (
 	"syscall"
 	"context"
 	"path/filepath"
+	"strconv"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
-	"k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/watch"
+	 v1 "k8s.io/api/core/v1"
+	 metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 type Capture struct {
 	cmd  *exec.Cmd
 	pod  string
+	cancel context.CancelFunc
 }
 
 var captures = make(map[string]*Capture)
@@ -61,15 +64,13 @@ func watchPods(client *kubernetes.Clientset, nodeName string) {
 		}
 
 		for event := range watcher.ResultChan() {
+			if event.Type != watch.Added && event.Type != watch.Modified {
+				continue
+			}
 			pod, ok := event.Object.(*v1.Pod)
 			if !ok {
 				continue
 			}
-
-			if pod.Spec.NodeName != nodeName {
-				continue
-			}
-
 			handlePod(pod)
 		}
 	}
@@ -94,36 +95,42 @@ func handlePod(pod *v1.Pod) {
 	}
 }
 
-
 func startCapture(pod *v1.Pod, n string) {
 	file := fmt.Sprintf("/outputs/capture-%s.pcap", pod.Name)
 
-	cmd := exec.Command("tcpdump", "-i", "any", "-C", "1", "-W", n, "-w", file)
-
-	err := cmd.Start()
+	files, err := strconv.Atoi(n)
 	if err != nil {
-		fmt.Println("Failed to start tcpdump:", err)
-		return
+		files = 1 
 	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+	
+	cmd := exec.CommandContext(ctx, "tcpdump", "-i", "any", "-C", "1", "-W", strconv.Itoa(files), "-w", file)
+	err = cmd.Start()
+    if err != nil {
+        fmt.Println("Failed to start tcpdump for pod:", pod.Name, "error:", err)
+        return
+    }
 
 	captures[string(pod.UID)] = &Capture{
-		cmd: cmd,
-		pod: pod.Name,
-	}
+        cmd:    cmd,
+        pod:    pod.Name,
+        cancel: cancel,
+    }
 
 	fmt.Println("Started capture for pod:", pod.Name)
 }
 
 func stopCapture(uid string, cap *Capture) {
-	fmt.Println("Stopping capture for pod:", cap.pod)
+    fmt.Println("Stopping capture for pod:", cap.pod)
 
-	cap.cmd.Process.Signal(syscall.SIGTERM)
-	cap.cmd.Wait()
+    cap.cancel()
+    cap.cmd.Wait()
 
-	files, _ := filepath.Glob(fmt.Sprintf("/capture-%s.pcap*", cap.pod))
-	for _, f := range files {
-		os.Remove(f)
-	}
+    files, _ := filepath.Glob(fmt.Sprintf("/outputs/capture-%s.pcap*", cap.pod))
+    for _, f := range files {
+        os.Remove(f)
+    }
 
-	delete(captures, uid)
+    delete(captures, uid)
 }
