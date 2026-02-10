@@ -2,8 +2,6 @@
 
 This repository contains a simple implementation of a Kubernetes packet capture controller, inspired by Antrea's PacketCapture feature. The controller runs as a DaemonSet and performs tcpdump captures on Pods on-demand using annotations.
 
----
-
 ## Features
 
 - Runs as a **DaemonSet** on every node.
@@ -12,8 +10,6 @@ This repository contains a simple implementation of a Kubernetes packet capture 
   where `N` is the capture duration in seconds.
 - Automatically **stops capture** and cleans up pcap files when annotation is removed.
 - Containerized using **Ubuntu 24.04, Go and tcpdump**.
-
----
 
 ## File Structure
 
@@ -34,8 +30,6 @@ This repository contains a simple implementation of a Kubernetes packet capture 
 ├── go.mod  
 ├── go.sum  
 └── README.md  
-
----
 
 ## Build and Deploy
 
