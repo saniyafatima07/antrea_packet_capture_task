@@ -9,9 +9,9 @@ This repository contains a simple implementation of a Kubernetes packet capture 
 - Runs as a **DaemonSet** on every node.
 - Watches **Pods on the same node**.
 - Captures network traffic **only when annotation is present**: tcpdump.antrea.io: "<N>"
-where `N` is the max number of capture files.
+  where `N` is the capture duration in seconds.
 - Automatically **stops capture** and cleans up pcap files when annotation is removed.
-- Containerized using **Ubuntu 24.04 + Go + tcpdump**.
+- Containerized using **Ubuntu 24.04, Go and tcpdump**.
 
 ---
 
@@ -27,7 +27,7 @@ where `N` is the max number of capture files.
 │   ├── capture-files.txt        
 │   ├── capture-output.txt       
 │   ├── capture-output.pcap  
-│   ├── pods-describe.txt         
+│   ├── pod-describe.txt         
 │   └── pods.txt                 
 ├── config.yaml   
 ├── Dockerfile  
@@ -42,7 +42,7 @@ where `N` is the max number of capture files.
 1. **Build the controller image**
 ```bash
 docker build -t packet-capture:dev .
-kind load docker-image packet-capture:dev
+kind load docker-image packet-capture:dev --name <cluster-name>
 ```
 
 2. **Deploy RBAC**
@@ -52,7 +52,7 @@ kubectl apply -f manifests/packet-capture-rbac.yaml
 
 3. **Deploy DaemonSet**
 ```
-kubectl apply -f manifests/packet-capture-daemonset.yaml
+kubectl apply -f manifests/daemonset.yaml
 ```
 
 4. **Deploy test Pod**
@@ -62,27 +62,44 @@ kubectl apply -f manifests/test-pod.yaml
 
 ## Verification
 
-1. **Check Pod node**
+1. **Annotate the test Pod to start capture**
+```bash
+kubectl annotate pod test-ping tcpdump.antrea.io="5"
+```
+
+2. **Check the node where the test Pod is running**
 ```bash
 kubectl get pod test-ping -o wide
 ```
 
-2. **Exec into the DaemonSet pod on the same node**
-```
-kubectl exec -n kube-system <packet-capture-pod> -- ls -l /outputs
-```
-
-3. **Copy pcap to local**
-```
-kubectl cp kube-system/<packet-capture-pod>:/outputs/test.pcap ./outputs/capture-output.txt
+3. **Get the packet-capture Pod running on the same node**
+```bash
+kubectl get pods -n kube-system -o wide | grep packet-capture
 ```
 
-4. **Read pcap output**
-```
-tcpdump -r ./capture-output.pcap
+4. **Verify that the capture file is created**
+```bash
+kubectl exec -n kube-system <packet-capture-pod> -- \
+sh -c 'ls -lh /outputs/capture-*' > outputs/capture-files.txt
 ```
 
-4. **Remove annotation**
+5. **Copy the pcap file to the local machine**
+```bash
+kubectl cp kube-system/<packet-capture-pod>:/outputs/capture-test-ping.pcap \
+outputs/capture-output.pcap
 ```
+
+6. **Generate human-readable output from the pcap**
+```bash
+tcpdump -r outputs/capture-output.pcap > outputs/capture-output.txt
+```
+
+7. **Remove the annotation to stop capture**
+```bash
 kubectl annotate pod test-ping tcpdump.antrea.io-
+```
+
+8. **Verify that the pcap files are deleted**
+```bash
+kubectl exec -n kube-system <packet-capture-pod> -- ls -lh /outputs
 ```
