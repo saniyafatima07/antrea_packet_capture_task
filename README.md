@@ -17,22 +17,23 @@ where `N` is the max number of capture files.
 
 ## File Structure
 
-├── cmd/ 
+├── cmd/  
 │   └── main.go  
-├── manifests/ 
-│   ├── daemonset.yaml 
-│   ├── packet-capture-rbac.yaml 
-│   └── test-pod.yaml 
-├── outputs/ 
-│   ├── capture-files.txt        # Output of ls -l /outputs in capture Pod 
-│   ├── capture-output.txt       # Human-readable tcpdump output 
-│   ├── capture-test-ping.pcap   # Extracted pcap file 
-│   ├── pod-describe.txt         # kubectl describe pod test-ping 
-│   └── pods.txt                 # kubectl get pods -A 
+├── manifests/  
+│   ├── daemonset.yaml  
+│   ├── packet-capture-rbac.yaml  
+│   └── test-pod.yaml  
+├── outputs/  
+│   ├── capture-files.txt        
+│   ├── capture-output.txt       
+│   ├── capture-output.pcap  
+│   ├── pod-describe.txt         
+│   └── pods.txt                 
 ├── config.yaml   
 ├── Dockerfile  
-├── go.mod   
-└── README.md 
+├── go.mod  
+├── go.sum  
+└── README.md  
 
 ---
 
