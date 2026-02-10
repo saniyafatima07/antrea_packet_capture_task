@@ -1,0 +1,5 @@
+05:23:44.341770 lo    In  IP localhost.37319 > localhost.37062: Flags [P.], seq 2304902610:2304902614, ack 954027756, win 64, options [nop,nop,TS val 2685147290 ecr 2685147262], length 4
+05:23:44.341787 lo    In  IP localhost.37319 > localhost.37062: Flags [P.], seq 4:8, ack 1, win 64, options [nop,nop,TS val 2685147290 ecr 2685147262], length 4
+05:23:44.341798 lo    In  IP localhost.37319 > localhost.37062: Flags [P.], seq 8:44, ack 1, win 64, options [nop,nop,TS val 2685147290 ecr 2685147262], length 36
+05:23:44.341854 lo    In  IP localhost.37062 > localhost.37319: Flags [.], ack 44, win 64, options [nop,nop,TS val 2685147290 ecr 2685147262], length 0
+05:23:44.341894 lo    In  IP 172.20.0.2.10250 > 172.20.0.2.57994: Flags [P.], seq 2795604881:2795604947, ack 579236888, win 77, options [nop,nop,TS val 603727646 ecr 603727618], length 66

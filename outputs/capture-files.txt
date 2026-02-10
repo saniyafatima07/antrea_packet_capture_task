@@ -1,1 +1,2 @@
--rw-r--r-- 1 tcpdump tcpdump 345780224 Feb  9 20:39 /outputs/pcap-output.pcap
+total 4
+-rw-r--r-- 1 tcpdump tcpdump 574 Feb  9 23:53 test.pcap
