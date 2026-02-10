@@ -27,7 +27,7 @@ where `N` is the max number of capture files.
 │   ├── capture-files.txt        
 │   ├── capture-output.txt       
 │   ├── capture-output.pcap  
-│   ├── pod-describe.txt         
+│   ├── pods-describe.txt         
 │   └── pods.txt                 
 ├── config.yaml   
 ├── Dockerfile  
